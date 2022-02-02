@@ -29,17 +29,17 @@ Criação da base de dados e Collection
 *********************************************************************************
 - Realizar o clone do projeto
 
-  - O projeto pode ser executando de 2 formas:
-      1. IDE de desenvolvimento:
-          Descomentar a seguinte linha do arquivo.properties -> spring.data.mongodb.host=127.0.0.1
-          Roda o projeto
+- O projeto pode ser executando de 2 formas:
+
+  1. IDE de desenvolvimento:
+  Descomentar a seguinte linha do arquivo.properties -> spring.data.mongodb.host=127.0.0.1
+  Roda o projeto
   
-         1. docker
-            Descomentar a seguinte linha do arquivo.properties -> spring.data.mongodb.host=host.docker.internal
-  
-            Executar os comando abaixo
-            docker build --build-arg JAR_FILE=build/libs/*.jar -t testetecnico/testesoftdesign .
-            docker run -p 8090:8090 testetecnico/testesoftdesign
+  2. docker
+  Descomentar a seguinte linha do arquivo.properties -> spring.data.mongodb.host=host.docker.internal
+  Executar os comando abaixo
+  docker build --build-arg JAR_FILE=build/libs/*.jar -t testetecnico/testesoftdesign .
+  docker run -p 8090:8090 testetecnico/testesoftdesign
 
 *********************************************************************************
 # Passo 4
