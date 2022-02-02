@@ -1,13 +1,52 @@
 # Started
-
 ### Projeto Teste Tecnico para SoftDesign
 
-Banco de dados utilizado mongoDB
+*********************************************************************************
+# Passo 1
+*********************************************************************************
+
+### Docker
+O Docker deve estar instalado e rodando na sua máquina:
+Instalar o Docker (Get Docker) -> https://docs.docker.com/get-docker/
+
+*********************************************************************************
+# Passo 2
+*********************************************************************************
+
+### MongoDB
+Gerar um imagem docker do mongo 
+
+NoSQLBooster
+É necessário uma interface de gerenciamento de banco de dados para a realização de algumas alterações no banco. Recomendamos o NoSQLBooster.
+Se preferir, pode utilizar outra ferramenta ou realizar os passos diretamente pelo terminal.
+
+Criação da base de dados e Collection
 - É necessario realizar a criação de um Data Base com o nome "teste-soft-design"
 - É necessario realizar a criação de uma Collection com o nome "Pauta"
 
 *********************************************************************************
-Para realizar os testes foi utilizado o programa Postman
+# Passo 3
+*********************************************************************************
+- Realizar o clone do projeto
+
+  - O projeto pode ser executando de 2 formas:
+      1. IDE de desenvolvimento:
+          Descomentar a seguinte linha do arquivo.properties -> spring.data.mongodb.host=127.0.0.1
+          Roda o projeto
+  
+         1. docker
+            Descomentar a seguinte linha do arquivo.properties -> spring.data.mongodb.host=host.docker.internal
+  
+            Executar os comando abaixo
+            docker build --build-arg JAR_FILE=build/libs/*.jar -t testetecnico/testesoftdesign .
+            docker run -p 8090:8090 testetecnico/testesoftdesign
+
+*********************************************************************************
+# Passo 4
+*********************************************************************************
+
+### Postman
+Para realizar os testes:
 
 ### Realizar o cadastro de uma Pauta
 Metodo POST - http://localhost:8090/pautas

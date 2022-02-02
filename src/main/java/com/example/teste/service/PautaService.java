@@ -9,12 +9,7 @@ import com.example.teste.util.Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.aggregation.Aggregation;
-import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -63,8 +58,13 @@ public class PautaService {
             PautaTotalVotosDTO pautaTotalVotosDTO = new PautaTotalVotosDTO();
             pautaTotalVotosDTO.setNumeroPauta(item.getNumeroPauta());
             pautaTotalVotosDTO.setAssunto(item.getAssunto());
-            pautaTotalVotosDTO.setSim(item.getVotacoes().stream().filter(v -> v.getVoto().toUpperCase(Locale.ROOT).equals("SIM")).count());
-            pautaTotalVotosDTO.setNao(item.getVotacoes().stream().filter(v -> v.getVoto().toUpperCase(Locale.ROOT).equals("NAO")).count());
+            if (Objects.nonNull(item.getVotacoes())) {
+                pautaTotalVotosDTO.setSim(item.getVotacoes().stream().filter(v -> v.getVoto().toUpperCase(Locale.ROOT).equals("SIM")).count());
+                pautaTotalVotosDTO.setNao(item.getVotacoes().stream().filter(v -> v.getVoto().toUpperCase(Locale.ROOT).equals("NAO")).count());
+            }else{
+                pautaTotalVotosDTO.setSim(0L);
+                pautaTotalVotosDTO.setNao(0L);
+            }
             retornoPautaTotalVotosDTOS.add(pautaTotalVotosDTO);
         }
 

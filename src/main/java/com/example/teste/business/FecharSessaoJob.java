@@ -26,14 +26,16 @@ public class FecharSessaoJob {
 
     @Scheduled(fixedDelay = UM_MINUTO)
     public void encerrarSessao() {
-        List<Pauta> pautaList = pautaService.listaPautas().stream().filter(p -> Objects.isNull(p.getSessao().getFim())).collect(Collectors.toList());
+        List<Pauta> pautaList = pautaService.listaPautas();
         for (Pauta item : pautaList) {
-            Date dataFimSessao = DateUtils.addMinutes(item.getSessao().getInicio(),item.getSessao().getDuracaoMinutos());
-            String dataFormatadaFimSessao = new SimpleDateFormat("dd/MM/yyyy HH:mm").format(dataFimSessao);
-            String dataHoraAtual = new SimpleDateFormat("dd/MM/yyyy HH:mm").format(new Date());
-            if (dataFormatadaFimSessao.equals(dataHoraAtual)){
-                item.getSessao().setFim(dataFimSessao);
-                pautaService.salvar(item);
+            if (Objects.nonNull(item.getSessao()) && Objects.isNull(item.getSessao().getFim())) {
+                Date dataFimSessao = DateUtils.addMinutes(item.getSessao().getInicio(), item.getSessao().getDuracaoMinutos());
+                String dataFormatadaFimSessao = new SimpleDateFormat("dd/MM/yyyy HH:mm").format(dataFimSessao);
+                String dataHoraAtual = new SimpleDateFormat("dd/MM/yyyy HH:mm").format(new Date());
+                if (dataFormatadaFimSessao.equals(dataHoraAtual)) {
+                    item.getSessao().setFim(dataFimSessao);
+                    pautaService.salvar(item);
+                }
             }
         }
     }
