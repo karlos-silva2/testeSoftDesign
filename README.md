@@ -31,12 +31,14 @@ Criação da base de dados e Collection
 
 - O projeto pode ser executando de 2 formas:
 
-  1. IDE de desenvolvimento:
+  IDE de desenvolvimento:
+
   Descomentar a seguinte linha do arquivo.properties -> spring.data.mongodb.host=127.0.0.1
   
   Roda o projeto
   
-  2. docker
+  docker
+
   Descomentar a seguinte linha do arquivo.properties -> spring.data.mongodb.host=host.docker.internal
   
   Executar os comando abaixo
