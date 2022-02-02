@@ -1,25 +1,88 @@
-# Getting Started
+# Started
 
-### Reference Documentation
-For further reference, please consider the following sections:
+### Projeto Teste Tecnico para SoftDesign
+
+Banco de dados utilizado mongoDB
+- É necessario realizar a criação de um Data Base com o nome "teste-soft-design"
+- É necessario realizar a criação de uma Collection com o nome "Pauta"
+
+*********************************************************************************
+Para realizar os testes foi utilizado o programa Postman
+
+### Realizar o cadastro de uma Pauta
+Metodo POST - http://localhost:8090/pautas
+
+Request
+```json
+{
+    "assunto":"Liberação de cachorros no condominio"
+}
+```
+
+Response
+```json
+{
+    "code": 200,
+    "messagem": "Pauta cadastrar com sucesso!",
+    "numeroPauta": 1333
+}
+```
+
+*********************************************************************************
+### Realizar o cadastro de uma sessão na respectiva Pauta
+Metodo POST - http://localhost:8090/sessao
+
+### Observação: para realizar o cadastro de uma sessao tem que pegar o numeroPauta gerado no cadastra da mesma.
+Request
+```json 
+{
+    "numeroPauta": //numeroPauta Gerado no cadastro
+    "inicioSessao": "2022-02-01T10:15:00-03:00",
+    "duracaoMinutosSessao": 10    
+}
+```
+Response
+```json 
+{
+    "code": 200,
+    "messagem": "Sessão adicionada na pauta com sucesso!",
+    "numeroPauta": 3682
+}
+```
+*********************************************************************************
+### Realizar o cadastro de um voto na respectiva Pauta
+Metodo POST - http://localhost:8090/votacao
+
+### Observação: para realizar o cadastro de um voto tem que pegar o numeroPauta gerado no cadastra da mesma.
+Request
+```json 
+{
+    "cpf": ""????????????",
+    "nome": "????????????",
+    "numeroPauta": //numeroPauta Gerado no cadastro,
+    "voto": "Sim"    
+}
+```
+*********************************************************************************
+### Realizar A listagem das Pautas
+Metodo GET - http://localhost:8090/pautas
+
+
+### Segue algumas referências
+Para referência adicional, considere as seguintes seções:
 
 * [Official Gradle documentation](https://docs.gradle.org)
 * [Spring Boot Gradle Plugin Reference Guide](https://docs.spring.io/spring-boot/docs/2.6.3/gradle-plugin/reference/html/)
-* [Create an OCI image](https://docs.spring.io/spring-boot/docs/2.6.3/gradle-plugin/reference/html/#build-image)
 * [Spring Data MongoDB](https://docs.spring.io/spring-boot/docs/2.6.3/reference/htmlsingle/#boot-features-mongodb)
 * [Spring Boot DevTools](https://docs.spring.io/spring-boot/docs/2.6.3/reference/htmlsingle/#using-boot-devtools)
 * [Spring Web](https://docs.spring.io/spring-boot/docs/2.6.3/reference/htmlsingle/#boot-features-developing-web-applications)
 
-### Guides
-The following guides illustrate how to use some features concretely:
+### Guias
+Os guias a seguir ilustram como usar alguns recursos de forma concreta:
 
 * [Accessing Data with MongoDB](https://spring.io/guides/gs/accessing-data-mongodb/)
 * [Building a RESTful Web Service](https://spring.io/guides/gs/rest-service/)
 * [Serving Web Content with Spring MVC](https://spring.io/guides/gs/serving-web-content/)
 * [Building REST services with Spring](https://spring.io/guides/tutorials/bookmarks/)
 
-### Additional Links
-These additional references should also help you:
-
-* [Gradle Build Scans – insights for your project's build](https://scans.gradle.com#gradle)
 
