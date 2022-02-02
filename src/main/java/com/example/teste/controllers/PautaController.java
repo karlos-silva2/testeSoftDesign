@@ -1,6 +1,7 @@
 package com.example.teste.controllers;
 
 import com.example.teste.entities.Pauta;
+import com.example.teste.entities.dto.PautaTotalVotosDTO;
 import com.example.teste.entities.request.PautaRequest;
 import com.example.teste.entities.response.PautaResponse;
 import com.example.teste.service.PautaService;
@@ -23,7 +24,7 @@ public class PautaController {
     }
 
     @GetMapping
-    public List<Pauta> listaPautas(){
-        return pautaService.listaPautas();
+    public List<PautaTotalVotosDTO> listaPautas(){
+        return pautaService.listaPautasTotalVotos();
     }
 }

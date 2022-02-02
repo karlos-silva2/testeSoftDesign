@@ -57,14 +57,14 @@ Metodo POST - http://localhost:8090/votacao
 Request
 ```json 
 {
-    "cpf": ""????????????",
+    "cpf": "???????????",
     "nome": "????????????",
     "numeroPauta": //numeroPauta Gerado no cadastro,
     "voto": "Sim"    
 }
 ```
 *********************************************************************************
-### Realizar A listagem das Pautas
+### Realizar a listagem das Pautas
 Metodo GET - http://localhost:8090/pautas
 
 
@@ -84,5 +84,3 @@ Os guias a seguir ilustram como usar alguns recursos de forma concreta:
 * [Building a RESTful Web Service](https://spring.io/guides/gs/rest-service/)
 * [Serving Web Content with Spring MVC](https://spring.io/guides/gs/serving-web-content/)
 * [Building REST services with Spring](https://spring.io/guides/tutorials/bookmarks/)
-
-
