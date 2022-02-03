@@ -31,7 +31,7 @@ Criação da base de dados e Collection
 
 - O projeto pode ser executando de 2 formas:
 
-  ### IDE de desenvolvimento:
+  ### IDE de desenvolvimento (Recomendação utilizar ** IntelliJ **):
 
   Descomentar a seguinte linha do arquivo.properties -> spring.data.mongodb.host=127.0.0.1
   
