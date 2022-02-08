@@ -34,7 +34,7 @@ public class FecharSessaoJob {
                 String dataHoraAtual = new SimpleDateFormat("dd/MM/yyyy HH:mm").format(new Date());
                 if (dataFormatadaFimSessao.equals(dataHoraAtual)) {
                     item.getSessao().setFim(dataFimSessao);
-                    pautaService.salvar(item);
+                    pautaService.atualizarPauta(item);
                 }
             }
         }

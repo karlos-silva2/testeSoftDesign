@@ -113,8 +113,9 @@ Request
 Metodo GET - http://localhost:8090/pautas
 
 
-
 *********************************************************************************
+### Link da documento do Swagger -> http://localhost:8090/swagger-ui.html#/
+
 ### Segue algumas referências
 Para referência adicional, considere as seguintes seções:
 
