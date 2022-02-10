@@ -1,4 +1,4 @@
-package com.example.teste.service.Impl;
+package com.example.teste.service.implementation;
 
 import com.example.teste.entities.Pauta;
 import com.example.teste.entities.dto.PautaTotalVotosDTO;

@@ -5,6 +5,6 @@ import com.example.teste.entities.response.PautaResponse;
 
 public interface VotacaoService {
 
-    PautaResponse salvar(VotacaoRequest votacaoRequest);
+    PautaResponse realizarValidacaoVoto(VotacaoRequest votacaoRequest);
 
 }

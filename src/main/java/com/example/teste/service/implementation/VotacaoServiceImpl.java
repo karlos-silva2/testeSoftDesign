@@ -1,5 +1,6 @@
-package com.example.teste.service.Impl;
+package com.example.teste.service.implementation;
 
+import com.example.teste.constants.RabbitMQConstants;
 import com.example.teste.entities.Pauta;
 import com.example.teste.entities.Sessao;
 import com.example.teste.entities.StatusCPF;
@@ -7,8 +8,8 @@ import com.example.teste.entities.Votacao;
 import com.example.teste.entities.request.VotacaoRequest;
 import com.example.teste.entities.response.PautaResponse;
 import com.example.teste.exception.HttpUtilException;
-import com.example.teste.repositories.PautaRepository;
 import com.example.teste.service.PautaService;
+import com.example.teste.service.RabbitMQServiceVotacao;
 import com.example.teste.service.VotacaoService;
 import com.example.teste.util.HttpUtil;
 import org.slf4j.Logger;
@@ -32,25 +33,30 @@ public class VotacaoServiceImpl implements VotacaoService {
     @Autowired
     private PautaService pautaService;
 
-    public PautaResponse salvar(VotacaoRequest votacaoRequest){
+    @Autowired
+    private RabbitMQServiceVotacao rabbitMQServiceVotacao;
+
+    public PautaResponse realizarValidacaoVoto(VotacaoRequest votacaoRequest){
         try {
             //Verificar se a pauta informada existe e se há sessão está aberta para votação
-            return verificaCadastraVoto(votacaoRequest);
+            return verificarEEnviarParaFilaVoto(votacaoRequest);
         }catch (Exception e){
             LOGGER.error("Erro ao realizar o cadastro do voto!", e);
         }
         return null;
     }
 
-    private PautaResponse verificaCadastraVoto(VotacaoRequest votacaoRequest) {
+    private PautaResponse verificarEEnviarParaFilaVoto(VotacaoRequest votacaoRequest) {
         PautaResponse pautaResponse = new PautaResponse();
-        //Buscar pauta existe de acodo com o número passsado
+
+        //Buscar pauta de acordo com o número passsado
         Pauta pautaPresente = getPauta(votacaoRequest.getNumeroPauta());
         if (Objects.nonNull(pautaPresente)){
+
             //Verifica se já existe Sessao cadastrada e se está aberta para votação
             if (Objects.nonNull(pautaPresente.getSessao()) && (verificarSessaAberta(pautaPresente.getSessao()))) {
-                //Caso exista sessão aberta, cadastrar voto
-                verificaCadastraVoto(votacaoRequest, pautaPresente, pautaResponse);
+                //Caso exista sessão aberta, verificar CPF e cadastrar voto
+                enviarParaFilaVoto(votacaoRequest, pautaPresente, pautaResponse);
             }else{
                 //Caso não exista ou não foi aberta a sessão
                 pautaResponse.setCode(HttpStatus.OK.value());
@@ -72,33 +78,20 @@ public class VotacaoServiceImpl implements VotacaoService {
         return false;
     }
 
-    private void verificaCadastraVoto(VotacaoRequest votacaoRequest, Pauta pautaPresente, PautaResponse pautaResponse) {
+    private void enviarParaFilaVoto(VotacaoRequest votacaoRequest, Pauta pautaPresente, PautaResponse pautaResponse) {
 
         Boolean votoPermitido = false;
         if (verificarCpfPodeVota(votacaoRequest.getCpf())) {
-            List<Votacao> votacaoList;
             if (Objects.nonNull(pautaPresente.getVotacoes())) {
-                votacaoList = pautaPresente.getVotacoes();
                 List<Votacao> verificaCpfVotoExistente = pautaPresente.getVotacoes().stream().filter(c -> c.getCpf().equals(votacaoRequest.getCpf())).collect(Collectors.toList());
                 votoPermitido = (verificaCpfVotoExistente.isEmpty()) ? true : false;
             } else {
-                votacaoList = new ArrayList<>();
                 votoPermitido = true;
             }
 
             if (votoPermitido) {
                 if (pautaPresente.getSessao().getInicio().before(new Date())){
-                    Votacao votacao = new Votacao();
-                    votacao.setNome(votacaoRequest.getNome());
-                    votacao.setCpf(votacaoRequest.getCpf());
-                    votacao.setVoto(votacaoRequest.getVoto());
-                    votacao.setData(new Date());
-                    votacaoList.add(votacao);
-                    pautaPresente.setVotacoes(votacaoList);
-
-                    //Chamara interface para relizar a gravação no banco
-                    pautaService.atualizarPauta(pautaPresente);
-
+                    rabbitMQServiceVotacao.enviaParaFilaVoto(RabbitMQConstants.FILA_VOTACAO,votacaoRequest);
                     pautaResponse.setCode(HttpStatus.OK.value());
                     pautaResponse.setMessagem("Voto realizado com sucesso!");
                 } else {

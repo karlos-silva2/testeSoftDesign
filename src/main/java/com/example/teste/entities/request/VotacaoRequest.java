@@ -1,6 +1,8 @@
 package com.example.teste.entities.request;
 
-public class VotacaoRequest {
+import java.io.Serializable;
+
+public class VotacaoRequest implements Serializable {
 
     private String cpf;
     private String nome;

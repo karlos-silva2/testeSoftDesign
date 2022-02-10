@@ -7,6 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class SoftDesignApplication {
 
 	public static void main(String[] args) {
+
 		SpringApplication.run(SoftDesignApplication.class, args);
 	}
 

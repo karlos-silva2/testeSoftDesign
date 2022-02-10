@@ -32,7 +32,7 @@ public class FecharSessaoJob {
                 Date dataFimSessao = DateUtils.addMinutes(item.getSessao().getInicio(), item.getSessao().getDuracaoMinutos());
                 String dataFormatadaFimSessao = new SimpleDateFormat("dd/MM/yyyy HH:mm").format(dataFimSessao);
                 String dataHoraAtual = new SimpleDateFormat("dd/MM/yyyy HH:mm").format(new Date());
-                if (dataFormatadaFimSessao.equals(dataHoraAtual)) {
+                if (dataFormatadaFimSessao.compareTo(dataHoraAtual) < 0) {
                     item.getSessao().setFim(dataFimSessao);
                     pautaService.atualizarPauta(item);
                 }

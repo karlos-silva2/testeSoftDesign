@@ -22,7 +22,7 @@ public class VotacaoController {
 
     @PostMapping(consumes = "application/json")
     public ResponseEntity<PautaResponse> adicionarVoto(@RequestBody VotacaoRequest votacaoRequest){
-        PautaResponse pautaResponse = votacaoService.salvar(votacaoRequest);
+        PautaResponse pautaResponse = votacaoService.realizarValidacaoVoto(votacaoRequest);
         return (Objects.isNull(pautaResponse)) ? new ResponseEntity<>(HttpStatus.NO_CONTENT) : new ResponseEntity<>(pautaResponse, HttpStatus.OK);
     }
 }
