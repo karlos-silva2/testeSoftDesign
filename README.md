@@ -27,9 +27,13 @@ Criação da base de dados e Collection
 *********************************************************************************
 # Passo 3
 *********************************************************************************
-- Realizar o clone do projeto
+- Realizar o clone dos projetos
 
-- O projeto pode ser executando de 2 formas:
+https://github.com/karlos-silva2/consumidor-votacao
+
+https://github.com/karlos-silva2/testesoftdesign
+ 
+- Os projetos pode ser executando de 2 formas:
 
   ### IDE de desenvolvimento (Recomendação utilizar ** IntelliJ **):
 
@@ -39,16 +43,28 @@ Criação da base de dados e Collection
   
   ### docker
 
-  Descomentar a seguinte linha do arquivo.properties -> spring.data.mongodb.host=host.docker.internal
+  Descomentar as seguintes linhas do arquivo.properties -> spring.data.mongodb.host=host.docker.internal - spring.rabbitmq.host=host.docker.internal
+  Comentar as seguintes linhas do arquivo.properties -> spring.data.mongodb.host=127.0.0.1 - spring.rabbitmq.host=127.0.0.1
   
+  Entrar no diretorio onde se encotra o arquivo Dockerfile
+ 
   Executar os comando abaixo
 
   docker build --build-arg JAR_FILE=build/libs/*.jar -t testetecnico/testesoftdesign .
-
   docker run -p 8090:8090 testetecnico/testesoftdesign
+
+  docker build --build-arg JAR_FILE=build/libs/*.jar -t testetecnico/consumidor-votacao .
+  docker run -p 8070:8070 testetecnico/consumidor-votacao
 
 *********************************************************************************
 # Passo 4
+*********************************************************************************
+### É Necessario rodar no docker a imagem do RabbitMQ
+
+Pois agora foi implementado a fila de votação.
+
+*********************************************************************************
+# Passo 5
 *********************************************************************************
 
 ### Postman
