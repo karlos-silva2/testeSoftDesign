@@ -19,7 +19,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -55,7 +54,7 @@ public class VotacaoServiceImpl implements VotacaoService {
 
             //Verifica se já existe Sessao cadastrada e se está aberta para votação
             if (Objects.nonNull(pautaPresente.getSessao()) && (verificarSessaAberta(pautaPresente.getSessao()))) {
-                //Caso exista sessão aberta, verificar CPF e cadastrar voto
+                //Caso exista sessão aberta, verificar CPF e enviar para fila de votação o VOTO
                 enviarParaFilaVoto(votacaoRequest, pautaPresente, pautaResponse);
             }else{
                 //Caso não exista ou não foi aberta a sessão
